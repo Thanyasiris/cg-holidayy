@@ -51,16 +51,16 @@ void CreateOBJ()
     bool loaded2 = car2->CreateMeshFromOBJ("Models/carop.obj");
     // car3
     Mesh *car3 = new Mesh();
-    bool loaded3 = car3->CreateMeshFromOBJ("Models/cat.obj");
+    bool loaded3 = car3->CreateMeshFromOBJ("Models/scaniverse-20210530-070602.obj");
     // car4
     Mesh *car4 = new Mesh();
-    bool loaded4 = car4->CreateMeshFromOBJ("Models/plane.obj");
+    bool loaded4 = car4->CreateMeshFromOBJ("Models/plane2.obj");
 
     Mesh *land = new Mesh();
-    bool loaded5 = land->CreateMeshFromOBJ("Models/duck.obj");
+    bool loaded5 = land->CreateMeshFromOBJ("Models/catB.obj");
 
     Mesh *model6 = new Mesh();
-    bool loaded6 = land->CreateMeshFromOBJ("Models/house.obj");
+    bool loaded6 = land->CreateMeshFromOBJ("Models/carop.obj");
 
     // Loading
     //  Object ----------------------------------------------------------------
@@ -277,11 +277,11 @@ int main()
         glm::vec3 objPositions[] = {
             /*(ซ้ายขวา, บนล่าง, หน้าหลัง)*/
             glm::vec3(-2.0f, 0.0f, -3.5f),       // ตำแหน่งรถ 1
-            glm::vec3(-2.0f, -1.0f, -5.5f),       // ตำแหน่งรถ 2
+            glm::vec3(8.0f, -2.0f, -7.5f),       // ตำแหน่งรถ 2
             glm::vec3(1.0f, -2.0f, -5.5f),       // ตำแหน่งรถ 3
-            /**/ glm::vec3(-4.0f, -2.0f, -6.5f), // Main Land
-            glm::vec3(3.0f, -1.0f, -5.5f),       // ตำแหน่งรถ 4
-            glm::vec3(1.0f, 0.0f, -4.5f),
+            /**/ glm::vec3(-4.0f, -2.5f, -6.5f), // Main Land
+            glm::vec3(3.0f, 0.0f, -5.5f),       // ตำแหน่งรถ 4
+            glm::vec3(8.0f, -3.0f, -3.0f), //รถ
         };
 
         glm::mat4 view(1.0f);
