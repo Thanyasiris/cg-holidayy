@@ -256,8 +256,8 @@ int main()
             model2 = glm::translate(model, glm::vec3(1.0f, -0.5f, -0.8f));
             glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model2));
             glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
-            //glActiveTexture(GL_TEXTURE0);
-            //glBindTexture(GL_TEXTURE_2D, texture);
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, texture);
             // light
             glUniform3fv(shaderList[0].GetUniformLocation("lightPos"), 1, (GLfloat *)&lightPos);
             glUniform3fv(shaderList[0].GetUniformLocation("lightColour"), 1, (GLfloat *)&lightColour);
@@ -267,8 +267,8 @@ int main()
             model2 = glm::translate(model2, glm::vec3(1.0f, -0.5f, -0.8f));
             glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model2));
             glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
-            //glActiveTexture(GL_TEXTURE0);
-            //glBindTexture(GL_TEXTURE_2D, texture);
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, texture);
             // light
             glUniform3fv(shaderList[0].GetUniformLocation("lightPos"), 1, (GLfloat *)&lightPos);
             glUniform3fv(shaderList[0].GetUniformLocation("lightColour"), 1, (GLfloat *)&lightColour);
