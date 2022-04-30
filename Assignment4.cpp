@@ -45,7 +45,7 @@ void CreateOBJ()
     // Object about sea-----------------------------------------------------------------
     // car1
     Mesh *car1 = new Mesh();
-    bool loaded1 = car1->CreateMeshFromOBJ("Models/house.obj");
+    bool loaded1 = true;
     // car2
     Mesh *car2 = new Mesh();
     bool loaded2 = car2->CreateMeshFromOBJ("Models/carop.obj");
@@ -184,6 +184,40 @@ int main()
     }
     stbi_image_free(data1);
 
+    // 2
+    unsigned int texture2;
+    glGenTextures(1, &texture2);
+    glBindTexture(GL_TEXTURE_2D, texture2);
+    unsigned char *data2 = stbi_load("Textures/snow01.png", &width, &height, &nrChannels, 0);
+    if (data2)
+    {
+        // bind image with texture
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data2);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data2);
+
+    // 3
+    unsigned int texture3;
+    glGenTextures(1, &texture3);
+    glBindTexture(GL_TEXTURE_2D, texture3);
+    unsigned char *data3 = stbi_load("Textures/rainbow.png", &width, &height, &nrChannels, 0);
+    if (data3)
+    {
+        // bind image with texture
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data3);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data3);
+
     // Loop until window closed
     while (!mainWindow.getShouldClose())
     {
@@ -252,18 +286,35 @@ int main()
 
             glUniform3fv(shaderList[0]->GetUniformLocation("viewPos"), 1, (GLfloat *)&cameraPos);
 
-            if (i == 0 || i==2) // texture รถคนที่1
+            if (i == 0) // texture รถคนที่1
 
             {
                 glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D, texture);
                 meshList[0]->RenderMesh();
             }
-            if (i == 1|| i==3) // texture รถคนที่1
+
+            if (i == 1) // texture รถคนที่1
 
             {
                 glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D, texture1);
+                meshList[0]->RenderMesh();
+            }
+
+            if (i == 3) // texture รถคนที่3
+
+            {
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, texture2);
+                meshList[0]->RenderMesh();
+            }
+
+            if (i == 2) // texture รถคนที่4
+
+            {
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, texture3);
                 meshList[0]->RenderMesh();
             }
 
