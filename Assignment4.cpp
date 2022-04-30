@@ -48,25 +48,25 @@ void CreateOBJ()
     bool loaded1 = true; //fix bug
     // obj2
     Mesh *obj2 = new Mesh();
-    bool loaded2 = obj2->CreateMeshFromOBJ("Models/carop.obj");
+    bool loaded2 = obj2->CreateMeshFromOBJ("Models/car.obj");
     // obj3
     Mesh *obj3 = new Mesh();
-    bool loaded3 = obj3->CreateMeshFromOBJ("Models/treehouse.obj");
+    bool loaded3 = obj3->CreateMeshFromOBJ("Models/car1.obj");
     // obj4
     Mesh *obj4 = new Mesh();
-    bool loaded4 = obj4->CreateMeshFromOBJ("Models/plane.obj");
+    bool loaded4 = obj4->CreateMeshFromOBJ("Models/car2.obj");
     // obj5
     Mesh *obj5 = new Mesh();
-    bool loaded5 = obj5->CreateMeshFromOBJ("Models/house.obj");
+    bool loaded5 = obj5->CreateMeshFromOBJ("Models/bigcat.obj");
     // obj6
     Mesh *obj6 = new Mesh();
-    bool loaded6 = obj6->CreateMeshFromOBJ("Models/home.obj");
+    bool loaded6 = obj6->CreateMeshFromOBJ("Models/littlecat.obj");
     // obj7
     Mesh *obj7 = new Mesh();
-    bool loaded7 = obj7->CreateMeshFromOBJ("Models/scaniverse-20210530-070602.obj");
+    bool loaded7 = obj7->CreateMeshFromOBJ("Models/planeslope.obj");
     // obj8
     Mesh *obj8 = new Mesh();
-    bool loaded8 = obj8->CreateMeshFromOBJ("Models/Scaniverse.obj");
+    bool loaded8 = obj8->CreateMeshFromOBJ("Models/wall.obj");
 
     // Loading
     //  Object ----------------------------------------------------------------
@@ -303,12 +303,12 @@ int main()
         glm::vec3 objPositions[] = {
             glm::vec3(-6.0f, -2.0f, -3.5f), // ตำแหน่งรถ 1
             glm::vec3(0.0f, -2.0f, -5.5f),   // ตำแหน่งรถ 2
-            glm::vec3(6.0f, -2.0f, -5.5f),   // ตำแหน่งรถ 3
-            glm::vec3(16.0f, -2.0f, -5.5f),  // ตำแหน่งรถ 4
-            glm::vec3(-6.0f, -2.0f, -3.5f),
-            glm::vec3(-12.0f, -2.0f, -3.5f),
-            glm::vec3(-18.0f, -2.0f, -3.5f),
-            glm::vec3(-24.0f, -2.0f, -3.5f)
+            glm::vec3(0.0f, -2.0f, -5.5f),   // ตำแหน่งรถ 3
+            glm::vec3(0.0f, -2.0f, -5.5f),  // ตำแหน่งรถ 4
+            glm::vec3(0.0f, -2.0f, -5.5f),
+            glm::vec3(0.0f, -2.0f, -5.5f),
+            glm::vec3(0.0f, -2.0f, -5.5f),
+            glm::vec3(0.0f, -2.0f, -5.5f)
         };
 
         glm::mat4 view(1.0f);
