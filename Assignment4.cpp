@@ -55,6 +55,9 @@ void CreateOBJ()
     // car4
     Mesh *car4 = new Mesh();
     bool loaded4 = car4->CreateMeshFromOBJ("Models/plane.obj");
+    //road 5
+    Mesh *land = new Mesh();
+    bool loaded5 = land->CreateMeshFromOBJ("Models/Gates.obj");
 
     // Loading
     //  Object ----------------------------------------------------------------
@@ -90,6 +93,16 @@ void CreateOBJ()
     if (loaded4)
     {
         meshList.push_back(car4);
+        std::cout << "load model 4" << std::endl;
+    }
+    else
+    {
+        std::cout << "Failed to load model" << std::endl;
+    }
+
+    if (loaded5)
+    {
+        meshList.push_back(land);
         std::cout << "load model 4" << std::endl;
     }
     else
@@ -184,6 +197,23 @@ int main()
     }
     stbi_image_free(data1);
 
+    // snow----------------------------
+    unsigned int texture2;
+    glGenTextures(1, &texture2);
+    glBindTexture(GL_TEXTURE_2D, texture2);
+    unsigned char *data2 = stbi_load("Textures/snow01.png", &width, &height, &nrChannels, 0);
+    if (data2)
+    {
+        // bind image with texture
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data2);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data2);
+
     // Loop until window closed
     while (!mainWindow.getShouldClose())
     {
@@ -215,6 +245,7 @@ int main()
 
         // Position for object
         glm::vec3 objPositions[] = {
+            /*(ซ้ายขวา, บนล่าง, หน้าหลัง)*/
             glm::vec3(-6.0f, -2.0f, -3.5f), // ตำแหน่งรถ 1
             glm::vec3(0.0f, -2.0f, -5.5f),   // ตำแหน่งรถ 2
             glm::vec3(6.0f, -2.0f, -5.5f),   // ตำแหน่งรถ 3
@@ -235,7 +266,7 @@ int main()
 
         view = glm::lookAt(cameraPos, cameraPos + cameraDirection, up);
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 5; i++)
         {
             glm::mat4 model(1.0f);
             model = glm::translate(model, objPositions[i]);
@@ -252,18 +283,26 @@ int main()
 
             glUniform3fv(shaderList[0]->GetUniformLocation("viewPos"), 1, (GLfloat *)&cameraPos);
 
-            if (i == 0 || i==2) // texture รถคนที่1
+            if (i == 0 || i==2 || i == 4) // texture รถคนที่1
 
             {
                 glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_2D, texture);
+                glBindTexture(GL_TEXTURE_2D, texture2);
                 meshList[0]->RenderMesh();
             }
-            if (i == 1|| i==3) // texture รถคนที่1
+            if (i == 1) // texture รถคนที่1
 
             {
                 glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D, texture1);
+                meshList[0]->RenderMesh();
+            }
+
+            if (i == 3) // texture รถคนที่1
+
+            {
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, texture2);
                 meshList[0]->RenderMesh();
             }
 
