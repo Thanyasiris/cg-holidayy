@@ -44,7 +44,8 @@ void CreateOBJ()
 {
     // Object about sea-----------------------------------------------------------------
    Mesh *car1 = new Mesh();
-    bool loaded1 = car1->CreateMeshFromOBJ("Models/house.obj");
+    bool loaded1 = car1->CreateMeshFromOBJ("Models/house2.obj");
+    loaded1 = true;
     // car2
     Mesh *car2 = new Mesh();
     bool loaded2 = car2->CreateMeshFromOBJ("Models/carop.obj");
@@ -57,6 +58,9 @@ void CreateOBJ()
 
     Mesh *land = new Mesh();
     bool loaded5 = land->CreateMeshFromOBJ("Models/duck.obj");
+
+    Mesh *model6 = new Mesh();
+    bool loaded6 = land->CreateMeshFromOBJ("Models/house.obj");
 
     // Loading
     //  Object ----------------------------------------------------------------
@@ -103,6 +107,16 @@ void CreateOBJ()
     {
         meshList.push_back(land);
         std::cout << "load model 4" << std::endl;
+    }
+    else
+    {
+        std::cout << "Failed to load model" << std::endl;
+    }
+
+    if (loaded6)
+    {
+        meshList.push_back(model6);
+        std::cout << "load model 6" << std::endl;
     }
     else
     {
@@ -262,11 +276,12 @@ int main()
         // Position for object
         glm::vec3 objPositions[] = {
             /*(ซ้ายขวา, บนล่าง, หน้าหลัง)*/
-            glm::vec3(-2.0f, 0.0f, -3.5f), // ตำแหน่งรถ 1
-            glm::vec3(-2.0f, 0.0f, -5.5f),  // ตำแหน่งรถ 2
-            glm::vec3(1.0f, -2.0f, -5.5f),  // ตำแหน่งรถ 3
-            /**/glm::vec3(-4.0f, -2.0f, -6.5f), // Main Land
-            glm::vec3(3.0f, -2.0f, -5.5f), // ตำแหน่งรถ 4
+            glm::vec3(-2.0f, 0.0f, -3.5f),       // ตำแหน่งรถ 1
+            glm::vec3(-2.0f, -1.0f, -5.5f),       // ตำแหน่งรถ 2
+            glm::vec3(1.0f, -2.0f, -5.5f),       // ตำแหน่งรถ 3
+            /**/ glm::vec3(-4.0f, -2.0f, -6.5f), // Main Land
+            glm::vec3(3.0f, -1.0f, -5.5f),       // ตำแหน่งรถ 4
+            glm::vec3(1.0f, 0.0f, -4.5f),
         };
 
         glm::mat4 view(1.0f);
@@ -283,7 +298,7 @@ int main()
 
         view = glm::lookAt(cameraPos, cameraPos + cameraDirection, up);
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 6; i++)
         {
             glm::mat4 model(1.0f);
             model = glm::translate(model, objPositions[i]);
@@ -301,39 +316,37 @@ int main()
             glUniform3fv(shaderList[0]->GetUniformLocation("viewPos"), 1, (GLfloat *)&cameraPos);
 
             if (i == 0) // texture รถคนที่1
-
             {
                 glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D, texture2);
                 meshList[0]->RenderMesh();
             }
+        
+            if (i == 1) // texture รถคนที่ 2
+
             {
-                glBindTexture(GL_TEXTURE_2D, texture1);
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, texture3);
                 meshList[0]->RenderMesh();
             }
 
             if (i == 3) // texture รถคนที่3
-
             {
                 glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D, texture2);
                 meshList[0]->RenderMesh();
-            }
-
-            if (i == 2) // texture รถคนที่4
-
+            }        
+            if (i == 4) // texture รถคนที่4
             {
-                model = glm::scale(model, glm::vec3(3.0f, 1.0f, 1.0f));
                 glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D, texture3);
                 meshList[0]->RenderMesh();
             }
 
-            if (i == 4) // texture รถคนที่4
-
+            if (i == 5) // texture รถคนที่4
             {
                 glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_2D, texture3);
+                glBindTexture(GL_TEXTURE_2D, texture2);
                 meshList[0]->RenderMesh();
             }
 
