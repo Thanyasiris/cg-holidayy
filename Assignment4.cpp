@@ -43,21 +43,20 @@ static const char *fShader = "Shaders/shader.frag";
 void CreateOBJ()
 {
     // Object about sea-----------------------------------------------------------------
-    // car1
-    Mesh *car1 = new Mesh();
-    bool loaded1 = true;
+   Mesh *car1 = new Mesh();
+    bool loaded1 = car1->CreateMeshFromOBJ("Models/house.obj");
     // car2
     Mesh *car2 = new Mesh();
     bool loaded2 = car2->CreateMeshFromOBJ("Models/carop.obj");
     // car3
     Mesh *car3 = new Mesh();
-    bool loaded3 = car3->CreateMeshFromOBJ("Models/treehouse.obj");
+    bool loaded3 = car3->CreateMeshFromOBJ("Models/cat.obj");
     // car4
     Mesh *car4 = new Mesh();
     bool loaded4 = car4->CreateMeshFromOBJ("Models/plane.obj");
-    //road 5
+
     Mesh *land = new Mesh();
-    bool loaded5 = land->CreateMeshFromOBJ("Models/Gates.obj");
+    bool loaded5 = land->CreateMeshFromOBJ("Models/duck.obj");
 
     // Loading
     //  Object ----------------------------------------------------------------
@@ -263,10 +262,11 @@ int main()
         // Position for object
         glm::vec3 objPositions[] = {
             /*(ซ้ายขวา, บนล่าง, หน้าหลัง)*/
-            glm::vec3(-6.0f, -2.0f, -3.5f), // ตำแหน่งรถ 1
-            glm::vec3(0.0f, -2.0f, -5.5f),   // ตำแหน่งรถ 2
-            glm::vec3(6.0f, -2.0f, -5.5f),   // ตำแหน่งรถ 3
-            glm::vec3(16.0f, -2.0f, -5.5f),  // ตำแหน่งรถ 4
+            glm::vec3(-2.0f, 0.0f, -3.5f), // ตำแหน่งรถ 1
+            glm::vec3(-2.0f, 0.0f, -5.5f),  // ตำแหน่งรถ 2
+            glm::vec3(1.0f, -2.0f, -5.5f),  // ตำแหน่งรถ 3
+            /**/glm::vec3(-4.0f, -2.0f, -6.5f), // Main Land
+            glm::vec3(3.0f, -2.0f, -5.5f), // ตำแหน่งรถ 4
         };
 
         glm::mat4 view(1.0f);
@@ -321,6 +321,15 @@ int main()
             }
 
             if (i == 2) // texture รถคนที่4
+
+            {
+                model = glm::scale(model, glm::vec3(3.0f, 1.0f, 1.0f));
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, texture3);
+                meshList[0]->RenderMesh();
+            }
+
+            if (i == 4) // texture รถคนที่4
 
             {
                 glActiveTexture(GL_TEXTURE0);
