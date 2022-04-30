@@ -45,22 +45,53 @@ void CreateOBJ()
     // Object about sea-----------------------------------------------------------------
     // car1
     Mesh *car1 = new Mesh();
-    bool loaded1 = car1->CreateMeshFromOBJ("Models/car2.obj");
+    bool loaded1 = car1->CreateMeshFromOBJ("Models/house.obj");
     // car2
     Mesh *car2 = new Mesh();
-    bool loaded2 = car2->CreateMeshFromOBJ("Models/car2.obj");
+    bool loaded2 = car2->CreateMeshFromOBJ("Models/carop.obj");
+    // car3
+    Mesh *car3 = new Mesh();
+    bool loaded3 = car3->CreateMeshFromOBJ("Models/treehouse.obj");
+    // car4
+    Mesh *car4 = new Mesh();
+    bool loaded4 = car4->CreateMeshFromOBJ("Models/plane.obj");
 
     // Loading
     //  Object ----------------------------------------------------------------
     if (loaded1)
     {
         meshList.push_back(car1);
+        std::cout << "load model 1" << std::endl;
+    }else
+    {
+        std::cout << "Failed to load model" << std::endl;
     }
+
     if (loaded2)
     {
         meshList.push_back(car2);
+        std::cout << "load model 2" << std::endl;
+    }
+    else
+    {
+        std::cout << "Failed to load model" << std::endl;
     }
 
+    if (loaded3)
+    {
+        meshList.push_back(car3);
+        std::cout << "load model 3" << std::endl;
+    }
+    else
+    {
+        std::cout << "Failed to load model" << std::endl;
+    }
+
+    if (loaded4)
+    {
+        meshList.push_back(car4);
+        std::cout << "load model 4" << std::endl;
+    }
     else
     {
         std::cout << "Failed to load model" << std::endl;
@@ -185,7 +216,9 @@ int main()
         // Position for object
         glm::vec3 objPositions[] = {
             glm::vec3(-6.0f, -2.0f, -3.5f), // ตำแหน่งรถ 1
-            glm::vec3(0.0f, -2.0f, -5.5f)   // ตำแหน่งรถ 2
+            glm::vec3(0.0f, -2.0f, -5.5f),   // ตำแหน่งรถ 2
+            glm::vec3(6.0f, -2.0f, -5.5f),   // ตำแหน่งรถ 3
+            glm::vec3(16.0f, -2.0f, -5.5f),  // ตำแหน่งรถ 4
         };
 
         glm::mat4 view(1.0f);
@@ -202,7 +235,7 @@ int main()
 
         view = glm::lookAt(cameraPos, cameraPos + cameraDirection, up);
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 4; i++)
         {
             glm::mat4 model(1.0f);
             model = glm::translate(model, objPositions[i]);
@@ -219,14 +252,14 @@ int main()
 
             glUniform3fv(shaderList[0]->GetUniformLocation("viewPos"), 1, (GLfloat *)&cameraPos);
 
-            if (i == 0) // texture รถคนที่1
+            if (i == 0 || i==2) // texture รถคนที่1
 
             {
                 glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D, texture);
                 meshList[0]->RenderMesh();
             }
-            if (i == 1) // texture รถคนที่1
+            if (i == 1|| i==3) // texture รถคนที่1
 
             {
                 glActiveTexture(GL_TEXTURE0);
