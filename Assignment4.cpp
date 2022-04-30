@@ -48,7 +48,7 @@ void CreateOBJ()
     bool loaded1 = car1->CreateMeshFromOBJ("Models/car2.obj");
     // car2
     Mesh *car2 = new Mesh();
-    bool loaded2 = car2->CreateMeshFromOBJ("Models/car2.obj");
+    bool loaded2 = car2->CreateMeshFromOBJ("Models/road.obj");
 
     // Loading
     //  Object ----------------------------------------------------------------
@@ -123,7 +123,7 @@ int main()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    unsigned char *data = stbi_load("Textures/uvmap.png", &width, &height, &nrChannels, 0);
+    unsigned char *data = stbi_load("Textures/road02.png", &width, &height, &nrChannels, 0);
     if (data)
     {
         // bind image with texture
@@ -140,7 +140,7 @@ int main()
     unsigned int texture1;
     glGenTextures(1, &texture1);
     glBindTexture(GL_TEXTURE_2D, texture1);
-    unsigned char *data1 = stbi_load("Textures/cloth.jpg", &width, &height, &nrChannels, 0);
+    unsigned char *data1 = stbi_load("Textures/road.jpg", &width, &height, &nrChannels, 0);
     if (data1)
     {
         // bind image with texture
@@ -184,8 +184,9 @@ int main()
 
         // Position for object
         glm::vec3 objPositions[] = {
-            glm::vec3(-6.0f, -2.0f, -3.5f), // ตำแหน่งรถ 1
-            glm::vec3(0.0f, -2.0f, -5.5f)   // ตำแหน่งรถ 2
+            /*(ซ้ายขวา , บนล่าง , หน้าหลัง)*/
+            glm::vec3(-1.0f, -2.0f, -3.5f), // ตำแหน่งรถ 1
+            glm::vec3(0.0f, -2.0f, -3.5f)   // ตำแหน่งรถ 2
         };
 
         glm::mat4 view(1.0f);
@@ -206,7 +207,7 @@ int main()
         {
             glm::mat4 model(1.0f);
             model = glm::translate(model, objPositions[i]);
-            // model = glm::rotate(model, glm::radians(2.0f), glm::vec3(50.0f, 0.0f, 10.0f));
+            //model = glm::rotate(model, glm::radians(2.0f), glm::vec3(50.0f, 0.0f, 10.0f));
             model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
 
             glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -226,16 +227,27 @@ int main()
                 glBindTexture(GL_TEXTURE_2D, texture);
                 meshList[0]->RenderMesh();
             }
-            if (i == 1) // texture รถคนที่1
+            /*if (i == 1) // texture รถคนที่1
 
             {
                 glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D, texture1);
                 meshList[0]->RenderMesh();
+            }*/
+
+            if (i == 0) // texture รถคนที่1
+
+            {
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, texture1);
+                meshList[1]->RenderMesh();
             }
 
             meshList[i]->RenderMesh();
         }
+
+
+
         // light cube
         shaderList[1]->UseShader();
         uniformModel = shaderList[1]->GetUniformLocation("model");
