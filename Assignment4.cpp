@@ -64,8 +64,6 @@ void CreateOBJ()
         std::cout << "Failed to load model" << std::endl;
     }
 
-        meshList.push_back(road);
-    }
     if (loaded3)
         meshList.push_back(Gate);
         std::cout << "load 3" << std::endl;
