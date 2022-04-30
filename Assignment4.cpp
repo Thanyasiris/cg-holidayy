@@ -61,12 +61,22 @@ void CreateOBJ()
     if (loaded1)
     {
         meshList.push_back(car1);
+        std::cout << "load model 1" << std::endl;
+    }else
+    {
         std::cout << "Failed to load model" << std::endl;
     }
 
-    if (loaded3)
-        meshList.push_back(Gate);
-        std::cout << "load 3" << std::endl;
+    if (loaded2)
+    {
+        meshList.push_back(car2);
+        std::cout << "load model 2" << std::endl;
+    }
+    else
+    {
+        std::cout << "Failed to load model" << std::endl;
+    }
+
     if (loaded3)
     {
         meshList.push_back(car3);
@@ -75,7 +85,6 @@ void CreateOBJ()
     else
     {
         std::cout << "Failed to load model" << std::endl;
->>>>>>> 952fec1d738c658d9162ec8ed2377dca9d7c1af5
     }
 
     if (loaded4)
@@ -83,6 +92,7 @@ void CreateOBJ()
         meshList.push_back(car4);
         std::cout << "load model 4" << std::endl;
     }
+    else
     {
         std::cout << "Failed to load model" << std::endl;
     }
@@ -107,7 +117,6 @@ void CreateShaders()
     Shader *shader2 = new Shader();
     shader2->CreateFromFiles(lightVShader, lightFShader);
     shaderList.push_back(shader2);
-
 }
 
 int main()
@@ -145,7 +154,7 @@ int main()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    unsigned char *data = stbi_load("Textures/road02.png", &width, &height, &nrChannels, 0);
+    unsigned char *data = stbi_load("Textures/uvmap.png", &width, &height, &nrChannels, 0);
     if (data)
     {
         // bind image with texture
@@ -174,23 +183,6 @@ int main()
         std::cout << "Failed to load texture" << std::endl;
     }
     stbi_image_free(data1);
-
-    //snow----------------------------
-    unsigned int texture2;
-    glGenTextures(1, &texture2);
-    glBindTexture(GL_TEXTURE_2D, texture2);
-    unsigned char *data2 = stbi_load("Textures/snow01.png", &width, &height, &nrChannels, 0);
-    if (data2)
-    {
-        // bind image with texture
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data2);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
-    {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(data2);
 
     // Loop until window closed
     while (!mainWindow.getShouldClose())
@@ -223,6 +215,84 @@ int main()
 
         // Position for object
         glm::vec3 objPositions[] = {
+            glm::vec3(-6.0f, -2.0f, -3.5f), // ตำแหน่งรถ 1
+            glm::vec3(0.0f, -2.0f, -5.5f),   // ตำแหน่งรถ 2
+            glm::vec3(6.0f, -2.0f, -5.5f),   // ตำแหน่งรถ 3
+            glm::vec3(16.0f, -2.0f, -5.5f),  // ตำแหน่งรถ 4
+        };
+
+        glm::mat4 view(1.0f);
+
+        glm::mat4 cameraPosMat(1.0f);
+        cameraPosMat[0][3] = cameraPos.x;
+        cameraPosMat[1][3] = cameraPos.y;
+        cameraPosMat[2][3] = cameraPos.z;
+
+        glm::mat4 cameraRotateMat(1.0f);
+        cameraRotateMat[0] = glm::vec4(cameraRight.x, cameraUp.x, cameraDirection.x, 0.0f);
+        cameraRotateMat[1] = glm::vec4(cameraRight.y, cameraUp.y, cameraDirection.y, 0.0f);
+        cameraRotateMat[2] = glm::vec4(-cameraRight.z, -cameraUp.z, -cameraDirection.z, 0.0f);
+
+        view = glm::lookAt(cameraPos, cameraPos + cameraDirection, up);
+
+        for (int i = 0; i < 4; i++)
+        {
+            glm::mat4 model(1.0f);
+            model = glm::translate(model, objPositions[i]);
+            // model = glm::rotate(model, glm::radians(2.0f), glm::vec3(50.0f, 0.0f, 10.0f));
+            model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+
+            glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+            glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(view));
+            glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
+
+            // light
+            glUniform3fv(shaderList[0]->GetUniformLocation("lightColour"), 1, (GLfloat *)&lightColour);
+            glUniform3fv(shaderList[0]->GetUniformLocation("lightPos"), 1, (GLfloat *)&lightPos);
+
+            glUniform3fv(shaderList[0]->GetUniformLocation("viewPos"), 1, (GLfloat *)&cameraPos);
+
+            if (i == 0 || i==2) // texture รถคนที่1
+
+            {
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, texture);
+                meshList[0]->RenderMesh();
+            }
+            if (i == 1|| i==3) // texture รถคนที่1
+
+            {
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, texture1);
+                meshList[0]->RenderMesh();
+            }
+
+            meshList[i]->RenderMesh();
+        }
+        // light cube
+        shaderList[1]->UseShader();
+        uniformModel = shaderList[1]->GetUniformLocation("model");
+        uniformView = shaderList[1]->GetUniformLocation("view");
+        uniformProjection = shaderList[1]->GetUniformLocation("projection");
+
+        glm::mat4 model(1.0f);
+
+        model = glm::translate(model, lightPos);
+        model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
+
+        glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+        glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(view));
+        glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
+
+        // light
+        glUniform3fv(shaderList[1]->GetUniformLocation("lightColour"), 1, (GLfloat *)&lightColour);
+        light->RenderMesh();
+
+        glUseProgram(0);
+        // end draw
+
+        mainWindow.swapBuffers();
+    }
 
     return 0;
 }
