@@ -24,7 +24,7 @@ Window::~Window()
 
 int Window::initialise()
 {
-    //init GLFW
+    // init GLFW
     if (!glfwInit())
     {
         printf("GLFW initialisation failed!");
@@ -32,17 +32,17 @@ int Window::initialise()
         return 1;
     }
 
-    //Setup GLFW window properties
-    //OpenGL version (using 3.1)
+    // Setup GLFW window properties
+    // OpenGL version (using 3.1)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, glfwMajorVersion);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, glfwMinorVersion);
 
-    //Core Profile = No Backwards Compatibility
+    // Core Profile = No Backwards Compatibility
     glfwWindowHint(GLFW_OPENGL_ANY_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    //Allow forward compatibility
+    // Allow forward compatibility
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-    mainWindow = glfwCreateWindow(width, height, "Test Window", NULL, NULL);
+    mainWindow = glfwCreateWindow(width, height, "Holiday", NULL, NULL);
 
     if (!mainWindow)
     {
@@ -51,13 +51,13 @@ int Window::initialise()
         return 1;
     }
 
-    //Get Buffer size information
+    // Get Buffer size information
     glfwGetFramebufferSize(mainWindow, &bufferWidth, &bufferHeight);
 
-    //Set context for GLEW to use
+    // Set context for GLEW to use
     glfwMakeContextCurrent(mainWindow);
 
-    //Allow modern extension features
+    // Allow modern extension features
     glewExperimental = GL_TRUE;
 
     if (glewInit() != GLEW_OK)
@@ -70,7 +70,7 @@ int Window::initialise()
 
     glEnable(GL_DEPTH_TEST);
 
-    //Setup Viewport size
+    // Setup Viewport size
     glViewport(0, 0, bufferWidth, bufferHeight);
 
     return 0;

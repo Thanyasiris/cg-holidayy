@@ -153,7 +153,7 @@ bool Mesh::CreateMeshFromOBJ(const char *path)
 
     fclose(file);
 
-    //re-index into VBO format
+    // re-index into VBO format
     indexCount = vertexIndices.size();
     std::vector<unsigned int> indices;
     std::vector<float> verts;
@@ -172,6 +172,9 @@ bool Mesh::CreateMeshFromOBJ(const char *path)
         verts.push_back(tempV.z);
         verts.push_back(tempUV.x);
         verts.push_back(tempUV.y);
+        verts.push_back(tempN.x);
+        verts.push_back(tempN.y);
+        verts.push_back(tempN.z);
         indices.push_back(i);
     }
 
@@ -187,10 +190,12 @@ bool Mesh::CreateMeshFromOBJ(const char *path)
 
     glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(float), &verts[0], GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), 0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), 0); // pos
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(3 * sizeof(float))); // uv map
     glEnableVertexAttribArray(1);
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(5 * sizeof(float))); // normal
+    glEnableVertexAttribArray(2);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 

@@ -13,18 +13,18 @@
 
 class Mesh
 {
-public:
-    Mesh();
-    ~Mesh();
+    public:
+        Mesh();
+        ~Mesh();
 
-    void CreateMesh(GLfloat *vertices, unsigned int *indices, unsigned int numOfVertices, unsigned int numOfIndices);
-    void RenderMesh();
-    void ClearMesh();
-    bool CreateMeshFromOBJ(const char *path);
+        void CreateMesh(GLfloat* vertices, unsigned int* indices, unsigned int numOfVertices, unsigned int numOfIndices);
+        void RenderMesh();
+        void ClearMesh();
+        bool CreateMeshFromOBJ(const char * path);
 
-private:
-    GLuint VAO, VBO, IBO, vertexBuffer, uvBuffer, normalBuffer;
-    GLsizei indexCount;
+    private:
+        GLuint VAO, VBO, IBO, vertexBuffer, uvBuffer, normalBuffer;
+        GLsizei indexCount;
 };
 
 #endif
