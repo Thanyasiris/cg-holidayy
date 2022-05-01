@@ -43,83 +43,110 @@ static const char *fShader = "Shaders/shader.frag";
 void CreateOBJ()
 {
     // Object about sea-----------------------------------------------------------------
-   Mesh *car1 = new Mesh();
-    bool loaded1 = car1->CreateMeshFromOBJ("Models/house.obj");
-    // car2
-    Mesh *car2 = new Mesh();
-    bool loaded2 = car2->CreateMeshFromOBJ("Models/catB.obj");
-    // car3
-    Mesh *car3 = new Mesh();
-    bool loaded3 = car3->CreateMeshFromOBJ("Models/scaniverse-20210530-070602.obj");
-    // car4
-    Mesh *car4 = new Mesh();
-    bool loaded4 = car4->CreateMeshFromOBJ("Models/plane2.obj");
-
-    Mesh *land = new Mesh();
-    bool loaded5 = land->CreateMeshFromOBJ("Models/catB.obj");
-
-    Mesh *model6 = new Mesh();
-    bool loaded6 = land->CreateMeshFromOBJ("Models/carop.obj");
+    // obj1
+    Mesh *obj1 = new Mesh();
+    bool loaded1 = true; //fix bug
+    // obj2
+    Mesh *obj2 = new Mesh();
+    bool loaded2 = obj2->CreateMeshFromOBJ("Models/car.obj");
+    // obj3
+    Mesh *obj3 = new Mesh();
+    bool loaded3 = obj3->CreateMeshFromOBJ("Models/car1.obj");
+    // obj4
+    Mesh *obj4 = new Mesh();
+    bool loaded4 = obj4->CreateMeshFromOBJ("Models/car2.obj");
+    // obj5
+    Mesh *obj5 = new Mesh();
+    bool loaded5 = obj5->CreateMeshFromOBJ("Models/bigcat.obj");
+    // obj6
+    Mesh *obj6 = new Mesh();
+    bool loaded6 = obj6->CreateMeshFromOBJ("Models/littlecat.obj");
+    // obj7
+    Mesh *obj7 = new Mesh();
+    bool loaded7 = obj7->CreateMeshFromOBJ("Models/planeslope.obj");
+    // obj8
+    Mesh *obj8 = new Mesh();
+    bool loaded8 = obj8->CreateMeshFromOBJ("Models/wall.obj");
 
     // Loading
     //  Object ----------------------------------------------------------------
     if (loaded1)
     {
-        meshList.push_back(car1);
+        meshList.push_back(obj1);
         std::cout << "load model 1" << std::endl;
     }else
     {
-        std::cout << "Failed to load model" << std::endl;
+        std::cout << "Failed to load model 1" << std::endl;
     }
 
     if (loaded2)
     {
-        meshList.push_back(car2);
+        meshList.push_back(obj2);
         std::cout << "load model 2" << std::endl;
     }
     else
     {
-        std::cout << "Failed to load model" << std::endl;
+        std::cout << "Failed to load model 2" << std::endl;
     }
 
     if (loaded3)
     {
-        meshList.push_back(car3);
+        meshList.push_back(obj3);
         std::cout << "load model 3" << std::endl;
     }
     else
     {
-        std::cout << "Failed to load model" << std::endl;
+        std::cout << "Failed to load model 3" << std::endl;
     }
 
     if (loaded4)
     {
-        meshList.push_back(car4);
+        meshList.push_back(obj4);
         std::cout << "load model 4" << std::endl;
     }
     else
     {
-        std::cout << "Failed to load model" << std::endl;
+        std::cout << "Failed to load model 4" << std::endl;
     }
 
     if (loaded5)
     {
-        meshList.push_back(land);
-        std::cout << "load model 4" << std::endl;
+        meshList.push_back(obj5);
+        std::cout << "load model 5" << std::endl;
     }
     else
     {
-        std::cout << "Failed to load model" << std::endl;
+        std::cout << "Failed to load model 5" << std::endl;
     }
 
     if (loaded6)
     {
-        meshList.push_back(model6);
+        meshList.push_back(obj6);
         std::cout << "load model 6" << std::endl;
     }
     else
     {
-        std::cout << "Failed to load model" << std::endl;
+        std::cout << "Failed to load model 6" << std::endl;
+    }
+
+    if (loaded7)
+    {
+        meshList.push_back(obj7);
+        std::cout << "load model 7" << std::endl;
+    }
+    else
+    {
+        std::cout << "Failed to load model 7" << std::endl;
+    }
+
+    if (loaded8)
+    {
+        meshList.push_back(obj8);
+        std::cout << "load model 8" << std::endl;
+    }
+    else
+    {
+        std::cout << "Failed to load model 8" << std::endl;
     }
 
     // light cube แหล่งกำเนิดแสง----------------------------------
@@ -196,11 +223,11 @@ int main()
     unsigned int texture1;
     glGenTextures(1, &texture1);
     glBindTexture(GL_TEXTURE_2D, texture1);
-    unsigned char *data1 = stbi_load("Textures/blue2.jpg", &width, &height, &nrChannels, 0);
+    unsigned char *data1 = stbi_load("Textures/Mirado_B_01_Df.png", &width, &height, &nrChannels, 0);
     if (data1)
     {
         // bind image with texture
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data1);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data1);
         glGenerateMipmap(GL_TEXTURE_2D);
     }
     else
@@ -262,7 +289,7 @@ int main()
             cameraPos += cameraRight * 0.01f;
 
         // Clear window --สีของหน้าจอ--
-        glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
+        glClearColor(0.0, 0.0, 0.0, 0.0);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -274,13 +301,14 @@ int main()
 
         // Position for object
         glm::vec3 objPositions[] = {
-            /*(ซ้ายขวา, บนล่าง, หน้าหลัง)*/
-            glm::vec3(-2.0f, 0.0f, -3.5f),       // ตำแหน่งรถ 1
-            glm::vec3(8.0f, -2.0f, -7.0f),       // ตำแหน่งรถ 2
-            glm::vec3(1.0f, -2.0f, -5.5f),       // ตำแหน่งรถ 3
-            /**/ glm::vec3(-4.0f, -2.5f, -6.5f), // Main Land
-            glm::vec3(3.0f, 0.0f, -5.5f),       // ตำแหน่งรถ 4
-            glm::vec3(8.0f, -3.0f, -3.0f), //รถ
+            glm::vec3(-6.0f, -2.0f, -3.5f), // ตำแหน่งรถ 1
+            glm::vec3(0.0f, -2.0f, -5.5f),   // ตำแหน่งรถ 2
+            glm::vec3(0.0f, -2.0f, -5.5f),   // ตำแหน่งรถ 3
+            glm::vec3(0.0f, -2.0f, -5.5f),  // ตำแหน่งรถ 4
+            glm::vec3(0.0f, -2.0f, -5.5f),
+            glm::vec3(0.0f, -2.0f, -5.5f),
+            glm::vec3(0.0f, -2.0f, -5.5f),
+            glm::vec3(0.0f, -2.0f, -5.5f)
         };
 
         glm::mat4 view(1.0f);
@@ -297,7 +325,7 @@ int main()
 
         view = glm::lookAt(cameraPos, cameraPos + cameraDirection, up);
 
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 8; i++)
         {
             glm::mat4 model(1.0f);
             model = glm::translate(model, objPositions[i]);
@@ -314,22 +342,15 @@ int main()
 
             glUniform3fv(shaderList[0]->GetUniformLocation("viewPos"), 1, (GLfloat *)&cameraPos);
 
-            if (i == 0) // texture รถคนที่1
-            {
-                glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_2D, texture1);
-                meshList[0]->RenderMesh();
-            }
-        
-            if (i == 1) // texture รถคนที่ 2
+            if (i == 0 || i==4) // texture รถคนที่1
 
             {
                 glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_2D, texture1);
+                glBindTexture(GL_TEXTURE_2D, texture);
                 meshList[0]->RenderMesh();
             }
 
-            if (i == 2) // texture รถคนที่ 2
+            if (i == 1) // texture รถคนที่1
 
             {
                 glActiveTexture(GL_TEXTURE0);
@@ -337,23 +358,19 @@ int main()
                 meshList[0]->RenderMesh();
             }
 
-            if (i == 3) // texture รถคนที่3
+            if (i == 3 || i==5 || i==7) // texture รถคนที่3
+
             {
                 glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_2D, texture1);
-                meshList[0]->RenderMesh();
-            }        
-            if (i == 4) // texture รถคนที่4
-            {
-                glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_2D, texture1);
+                glBindTexture(GL_TEXTURE_2D, texture2);
                 meshList[0]->RenderMesh();
             }
 
-            if (i == 5) // texture รถคนที่4
+            if (i == 2 || i==6) // texture รถคนที่4
+
             {
                 glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_2D, texture1);
+                glBindTexture(GL_TEXTURE_2D, texture3);
                 meshList[0]->RenderMesh();
             }
 
