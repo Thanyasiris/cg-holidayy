@@ -48,7 +48,7 @@ void CreateOBJ()
     loaded1 = true;
     // car2
     Mesh *car2 = new Mesh();
-    bool loaded2 = car2->CreateMeshFromOBJ("Models/carop.obj");
+    bool loaded2 = car2->CreateMeshFromOBJ("Models/catB.obj");
     // car3
     Mesh *car3 = new Mesh();
     bool loaded3 = car3->CreateMeshFromOBJ("Models/scaniverse-20210530-070602.obj");
@@ -277,7 +277,7 @@ int main()
         glm::vec3 objPositions[] = {
             /*(ซ้ายขวา, บนล่าง, หน้าหลัง)*/
             glm::vec3(-2.0f, 0.0f, -3.5f),       // ตำแหน่งรถ 1
-            glm::vec3(8.0f, -2.0f, -7.5f),       // ตำแหน่งรถ 2
+            glm::vec3(8.0f, -2.0f, -7.0f),       // ตำแหน่งรถ 2
             glm::vec3(1.0f, -2.0f, -5.5f),       // ตำแหน่งรถ 3
             /**/ glm::vec3(-4.0f, -2.5f, -6.5f), // Main Land
             glm::vec3(3.0f, 0.0f, -5.5f),       // ตำแหน่งรถ 4
