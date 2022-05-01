@@ -44,8 +44,7 @@ void CreateOBJ()
 {
     // Object about sea-----------------------------------------------------------------
    Mesh *car1 = new Mesh();
-    bool loaded1 = car1->CreateMeshFromOBJ("Models/house2.obj");
-    loaded1 = true;
+    bool loaded1 = car1->CreateMeshFromOBJ("Models/house.obj");
     // car2
     Mesh *car2 = new Mesh();
     bool loaded2 = car2->CreateMeshFromOBJ("Models/catB.obj");
@@ -197,7 +196,7 @@ int main()
     unsigned int texture1;
     glGenTextures(1, &texture1);
     glBindTexture(GL_TEXTURE_2D, texture1);
-    unsigned char *data1 = stbi_load("Textures/cloth.jpg", &width, &height, &nrChannels, 0);
+    unsigned char *data1 = stbi_load("Textures/blue2.jpg", &width, &height, &nrChannels, 0);
     if (data1)
     {
         // bind image with texture
@@ -263,7 +262,7 @@ int main()
             cameraPos += cameraRight * 0.01f;
 
         // Clear window --สีของหน้าจอ--
-        glClearColor(0.0, 0.0, 0.0, 0.0);
+        glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -318,7 +317,7 @@ int main()
             if (i == 0) // texture รถคนที่1
             {
                 glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_2D, texture2);
+                glBindTexture(GL_TEXTURE_2D, texture1);
                 meshList[0]->RenderMesh();
             }
         
@@ -326,27 +325,35 @@ int main()
 
             {
                 glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_2D, texture3);
+                glBindTexture(GL_TEXTURE_2D, texture1);
+                meshList[0]->RenderMesh();
+            }
+
+            if (i == 2) // texture รถคนที่ 2
+
+            {
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, texture1);
                 meshList[0]->RenderMesh();
             }
 
             if (i == 3) // texture รถคนที่3
             {
                 glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_2D, texture2);
+                glBindTexture(GL_TEXTURE_2D, texture1);
                 meshList[0]->RenderMesh();
             }        
             if (i == 4) // texture รถคนที่4
             {
                 glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_2D, texture3);
+                glBindTexture(GL_TEXTURE_2D, texture1);
                 meshList[0]->RenderMesh();
             }
 
             if (i == 5) // texture รถคนที่4
             {
                 glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_2D, texture2);
+                glBindTexture(GL_TEXTURE_2D, texture1);
                 meshList[0]->RenderMesh();
             }
 
