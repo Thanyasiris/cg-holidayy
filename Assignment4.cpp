@@ -42,7 +42,7 @@ static const char *fShader = "Shaders/shader.frag";
 
 void CreateOBJ()
 {
-    // Object about sea-----------------------------------------------------------------
+    // Object -----------------------------------------------------------------
     // obj1
     Mesh *obj1 = new Mesh();
     bool loaded1 = true; //fix bug
@@ -186,7 +186,7 @@ int main()
     // All Objects's scale equal
     // glm::mat4 projection = glm::ortho(-4.0f, 4.0f, -3.0f, 3.0f, 0.1f, 100.0f);
 
-    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 cameraPos = glm::vec3(-0.5f, 0.5f, 1.0f);
     glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, -1.0f);
     glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
 
@@ -206,11 +206,11 @@ int main()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    unsigned char *data = stbi_load("Textures/uvmap.png", &width, &height, &nrChannels, 0);
+    unsigned char *data = stbi_load("Textures/red.jpg", &width, &height, &nrChannels, 0);
     if (data)
     {
         // bind image with texture
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
     }
     else
@@ -223,7 +223,7 @@ int main()
     unsigned int texture1;
     glGenTextures(1, &texture1);
     glBindTexture(GL_TEXTURE_2D, texture1);
-    unsigned char *data1 = stbi_load("Textures/Mirado_B_01_Df.png", &width, &height, &nrChannels, 0);
+    unsigned char *data1 = stbi_load("Textures/orange.png", &width, &height, &nrChannels, 0);
     if (data1)
     {
         // bind image with texture
@@ -270,6 +270,40 @@ int main()
     }
     stbi_image_free(data3);
 
+    // 4
+    unsigned int texture4;
+    glGenTextures(1, &texture4);
+    glBindTexture(GL_TEXTURE_2D, texture4);
+    unsigned char *data4 = stbi_load("Textures/blue.png", &width, &height, &nrChannels, 0);
+    if (data4)
+    {
+        // bind image with texture
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data4);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data4);
+
+    // 5
+    unsigned int texture5;
+    glGenTextures(1, &texture5);
+    glBindTexture(GL_TEXTURE_2D, texture5);
+    unsigned char *data5 = stbi_load("Textures/it.png", &width, &height, &nrChannels, 0);
+    if (data4)
+    {
+        // bind image with texture
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data5);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data5);
+
     // Loop until window closed
     while (!mainWindow.getShouldClose())
     {
@@ -301,14 +335,14 @@ int main()
 
         // Position for object
         glm::vec3 objPositions[] = {
-            glm::vec3(-6.0f, -2.0f, -3.5f), // ตำแหน่งรถ 1
-            glm::vec3(0.0f, -2.0f, -5.5f),   // ตำแหน่งรถ 2
-            glm::vec3(0.0f, -2.0f, -5.5f),   // ตำแหน่งรถ 3
-            glm::vec3(0.0f, -2.0f, -5.5f),  // ตำแหน่งรถ 4
-            glm::vec3(0.0f, -2.0f, -5.5f),
-            glm::vec3(0.0f, -2.0f, -5.5f),
-            glm::vec3(0.0f, -2.0f, -5.5f),
-            glm::vec3(0.0f, -2.0f, -5.5f)
+            glm::vec3(-6.0f, -2.0f, -3.5f), 
+            glm::vec3(0.0f, -2.0f, -5.5f),  // ตำแหน่งรถ 1
+            glm::vec3(0.0f, -2.0f, -5.5f),  // ตำแหน่งรถ 2
+            glm::vec3(0.0f, -2.0f, -5.5f),  // ตำแหน่งรถ 3
+            glm::vec3(0.0f, -2.0f, -5.5f),  // ตำแหน่งแมวด้านหลัง
+            glm::vec3(0.0f, -2.0f, -5.5f),  // ตำแหน่งแมวด้านหน้า
+            glm::vec3(-1.0f, -2.0f, -60.5f), // ตำแหน่งพื้น
+            glm::vec3(0.0f, -2.0f, -5.5f)   // ตำแหน่งกำแพง
         };
 
         glm::mat4 view(1.0f);
@@ -342,7 +376,7 @@ int main()
 
             glUniform3fv(shaderList[0]->GetUniformLocation("viewPos"), 1, (GLfloat *)&cameraPos);
 
-            if (i == 0 || i==4) // texture รถคนที่1
+            if (i == 0 || i==1) // texture uvmap
 
             {
                 glActiveTexture(GL_TEXTURE0);
@@ -350,7 +384,7 @@ int main()
                 meshList[0]->RenderMesh();
             }
 
-            if (i == 1) // texture รถคนที่1
+            if (i == 5) // texture orange
 
             {
                 glActiveTexture(GL_TEXTURE0);
@@ -358,7 +392,7 @@ int main()
                 meshList[0]->RenderMesh();
             }
 
-            if (i == 3 || i==5 || i==7) // texture รถคนที่3
+            if (i == 4 || i==6) // texture snow
 
             {
                 glActiveTexture(GL_TEXTURE0);
@@ -366,11 +400,27 @@ int main()
                 meshList[0]->RenderMesh();
             }
 
-            if (i == 2 || i==6) // texture รถคนที่4
+            if (i == 2) // texture rainbow
 
             {
                 glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D, texture3);
+                meshList[0]->RenderMesh();
+            }
+
+            if (i == 3) // texture blue
+
+            {
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, texture4);
+                meshList[0]->RenderMesh();
+            }
+
+            if (i == 7) // texture it
+
+            {
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, texture5);
                 meshList[0]->RenderMesh();
             }
 
